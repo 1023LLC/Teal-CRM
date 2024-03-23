@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import signup
+from . import views
 
-from django.contrib.auth import views
+from django.contrib.auth.views import LoginView, LogoutView
 
 app_name = 'userprofile'
 
 urlpatterns = [
-    path('sign-up/', signup, name='signup'),
-    path('log-in/', views.LoginView.as_view(template_name='userprofile/login.html'), name='login')
+    path('sign-up/', views.signup, name='signup'),
+    path('log-in/', LoginView.as_view(template_name='userprofile/login.html'), name='login'),
+    path('log-out/', LogoutView.as_view(next_page='core:index'), name='logout'),
 ]

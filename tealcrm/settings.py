@@ -28,9 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-LOGIN_REDIRECT_URL = '/dashboard/'
-LOGIN_URL = 'LOGIN'
-LOGOUT_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = '/dashboard/'  
+LOGIN_URL = 'login'  
+# LOGOUT_REDIRECT_URL = 'index'  
+
 
 
 

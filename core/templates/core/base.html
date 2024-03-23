@@ -13,16 +13,26 @@
 
       <div class="space-x-2">
         <a href="{% url 'core:about' %}" class="text-white">About</a>
-        <a
-          href="/"
-          class="py-4 px-6 bg-teal-600 text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
-          >Log in</a
-        >
-        <a
-          href="{% url 'userprofile:signup' %}"
-          class="py-4 px-6 bg-black text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
-          >Sign up</a
-        >
+
+        {% if request.user.is_authenticated %}
+          <form method="post" action="{% url 'userprofile:logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="py-4 px-6 bg-red-500 text-white rounded-xl hover:bg-red-600 transition duration-500 ease-in-out">
+              Log out
+            </button>
+          </form>
+        {% else %}
+          <a
+            href="{% url 'userprofile:login' %}"
+            class="py-4 px-6 bg-teal-600 text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
+            >Log in</a
+          >
+          <a
+            href="{% url 'userprofile:signup' %}"
+            class="py-4 px-6 bg-black text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
+            >Sign up</a
+          >
+        {% endif %}
       </div>
     </nav>
 
