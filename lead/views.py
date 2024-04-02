@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import AddLeadForm
 from .models import Lead
 
+from django.contrib import messages
 
 
 @login_required
@@ -24,10 +25,30 @@ def leads_detail(request, pk):
 def leads_delete(request, pk):
     lead = get_object_or_404(Lead, created_by=request.user, pk=pk)
     
+    messages.success(request, 'The lead was deleted!')
+    
     lead.delete()
     
     return redirect('lead:leads_list')
 
+
+@login_required
+def leads_edit(request, pk):
+    lead = get_object_or_404(Lead, created_by=request.user, pk=pk)
+    
+    if request.method == 'POST':
+        form = AddLeadForm(request.POST, instance=lead)
+        
+        if form.is_valid():
+            form.save()
+            
+            messages.success(request, 'The changes were saved')
+            
+            return redirect('lead:leads_list')
+    else:
+        form = AddLeadForm(instance=lead)
+        
+    return render(request, 'lead/leads_edit.html', {'form':form})
 
 @login_required
 def add_lead(request):
@@ -39,7 +60,9 @@ def add_lead(request):
             lead.created_by = request.user
             lead.save()
             
-            return redirect('/dashboard/')
+            messages.success(request, 'The lead was created')
+            
+            return redirect('lead:leads_list')
     else:
         form = AddLeadForm()
     
