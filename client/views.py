@@ -8,6 +8,8 @@ from .forms import AddClientForm
 
 from django.contrib import messages
 
+from team.models import Team
+
 
 
 @login_required
@@ -61,8 +63,10 @@ def clients_add(request):
         form = AddClientForm(request.POST)
         
         if form.is_valid():
+            team = Team.objects.filter(created_by=request.user)[0]
             client = form.save(commit=False)
             client.created_by = request.user
+            client.team = team
             client.save()
             
             messages.success(request, 'The client was added succesfully!')
