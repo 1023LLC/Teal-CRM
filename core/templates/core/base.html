@@ -26,6 +26,12 @@
             class="py-4 px-6 bg-teal-600 text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
             >Leads</a
           >
+
+          <a
+            href="{% url 'client:clients_list' %}"
+            class="py-4 px-6 bg-teal-600 text-white rounded-xl hover:bg-orange-400 transition duration-500 ease-in-out"
+            >Clients</a
+          >
           <form method="post" action="{% url 'userprofile:logout' %}" style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="py-4 px-6 bg-red-500 text-white rounded-xl hover:bg-red-600 transition duration-500 ease-in-out">
